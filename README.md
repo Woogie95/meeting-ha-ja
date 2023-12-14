@@ -8,8 +8,8 @@
 
 ## 3. ERD (Entity-Relationship Diagram) 🧭
 - 임시 ERD
+![gathering-ha-jaERD](https://github.com/Woogie95/gathering-ha-ja/assets/78896254/c55ad14f-335c-4f3d-9fec-31a7894a173a)
 
-![img.png](/Users/sungwook/Desktop/개발새발/project_img/gathering-ha-ja ERD.png)
 
 ## 4. 기술 스택 (Tech Stack) ⚙️
 1. Java
