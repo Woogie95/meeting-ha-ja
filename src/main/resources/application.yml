@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/meeting_ha_ja?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: tjddnr12
+  thymeleaf:
+    cache: false
+
+  # spring data jpa
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+
+# swagger setting
+springdoc:
+  packages-to-scan: com.example.controller
+  default-consumes-media-type: application/json; charset=UTF-8
+  default-produces-media-type: application/json; charset=UTF-8
