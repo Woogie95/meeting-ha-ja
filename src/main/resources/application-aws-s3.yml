@@ -1,0 +1,10 @@
+# AWS S3
+cloud:
+  aws:
+    s3:
+      bucket: asd
+      stack.auto: false
+      region.static: us-east-1
+      credentials:
+        accessKey: AKIAQQTPC6YH6JVNTDID
+        secretKey: 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
