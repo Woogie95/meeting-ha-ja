@@ -2,18 +2,18 @@ package com.example.gatheringhaja.dto.request;
 
 import com.example.gatheringhaja.entity.Member;
 import com.example.gatheringhaja.entity.enumerations.Gender;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.hibernate.validator.constraints.URL;
 
 @Getter
 @Builder
 @AllArgsConstructor
-public class CreateMemberRequest {
+public class SignupMemberRequest {
+
+    @NotBlank(message = "최소 1자 이상 닉네임을 입력해주세요.")
+    private String nickname;
 
     @Email
     private String email;
@@ -21,8 +21,10 @@ public class CreateMemberRequest {
     @NotBlank
     private String password;
 
-    @NotNull(message = "숫자로 올바른 나이를 입력해 주세요.")
-    private int age;
+    @Min(1)
+    @Max(100)
+    @NotNull(message = "올바른 나이를 입력해 주세요.")
+    private Integer age;
 
     @NotNull
     private Gender gender;
@@ -37,6 +39,7 @@ public class CreateMemberRequest {
 
     public Member toEntity() {
         return Member.builder()
+                .nickname(this.nickname)
                 .email(this.email)
                 .password(this.password)
                 .age(this.age)

@@ -13,8 +13,10 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateMemberResponse {
+public class SignupMemberResponse {
 
+    private Long id;
+    private String nickname;
     private String email;
     private String password;
     private int age;
@@ -25,8 +27,10 @@ public class CreateMemberResponse {
     private LocalDateTime registered;
     private boolean deleted;
 
-    public static CreateMemberResponse from(Member member) {
-        return CreateMemberResponse.builder()
+    public static SignupMemberResponse from(Member member) {
+        return SignupMemberResponse.builder()
+                .id(member.getId())
+                .nickname(member.getNickname())
                 .email(member.getEmail())
                 .password(member.getPassword())
                 .age(member.getAge())
