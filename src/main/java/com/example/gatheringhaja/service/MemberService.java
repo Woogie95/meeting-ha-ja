@@ -1,22 +1,26 @@
 package com.example.gatheringhaja.service;
 
-import com.example.gatheringhaja.dto.request.CreateMemberRequest;
-import com.example.gatheringhaja.dto.response.CreateMemberResponse;
-import com.example.gatheringhaja.entity.Member;
-import com.example.gatheringhaja.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class MemberService {
 
-    private final MemberRepository memberRepository;
+    /**
+     * 회원 상세 조회
+     */
 
-    @Transactional
-    public CreateMemberResponse create(CreateMemberRequest createMemberRequest) {
-        return CreateMemberResponse.from(memberRepository.save(createMemberRequest.toEntity()));
-    }
+    /**
+     * 회원 전제 조회
+     */
+
+    /**
+     * 회원 업데이트
+     */
+
+    /**
+     * 회원 탈퇴
+     */
 
 }
