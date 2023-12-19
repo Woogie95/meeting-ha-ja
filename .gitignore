@@ -25,7 +25,7 @@ bin/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-application-aws-s3.yml
+application-secret-key.yml
 
 ### NetBeans ###
 /nbproject/private/
