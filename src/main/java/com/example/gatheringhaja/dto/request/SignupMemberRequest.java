@@ -24,7 +24,7 @@ public class SignupMemberRequest {
     @Min(1)
     @Max(100)
     @NotNull(message = "올바른 나이를 입력해 주세요.")
-    private Integer age;
+    private int age;
 
     @NotNull
     private Gender gender;
