@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -19,7 +20,7 @@ public class FindByIdMemberResponse {
     private String nickname;
     private String email;
     private String password;
-    private int age;
+    private LocalDate birthDate;
     private Gender gender;
     private String phoneNumber;
     private String profileImagePath;
@@ -33,7 +34,7 @@ public class FindByIdMemberResponse {
                 .nickname(member.getNickname())
                 .email(member.getEmail())
                 .password(member.getPassword())
-                .age(member.getAge())
+                .birthDate(member.getBirthDate())
                 .phoneNumber(member.getPhoneNumber())
                 .profileImagePath(member.getProfileImagePath())
                 .introduction(member.getIntroduction())
