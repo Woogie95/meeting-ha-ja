@@ -1,6 +1,5 @@
 package com.example.gatheringhaja.controller;
 
-import com.example.gatheringhaja.dto.response.FindByIdMemberResponse;
 import com.example.gatheringhaja.service.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +18,7 @@ public class FileController {
     @PostMapping("/profile/{memberId}")
     public ResponseEntity<?> uploadProfileImage(@PathVariable("memberId") Long memberId,
                                                 @RequestParam MultipartFile file) throws IOException {
-        fileService.uploadProfileImage(memberId, file);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(fileService.uploadProfileImage(memberId, file));
     }
 
 }

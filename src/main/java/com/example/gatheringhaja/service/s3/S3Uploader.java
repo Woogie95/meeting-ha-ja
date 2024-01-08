@@ -18,7 +18,7 @@ public class S3Uploader {
     private final AmazonS3Client amazonS3Client;
 
     @Value("${cloud.aws.s3.bucket}")
-    private String bucket = "my-meeting-profile";
+    private String bucket;
 
     public String upload(MultipartFile multipartFile, String imagePath) throws IOException {
         String originalFileName = multipartFile.getOriginalFilename();
