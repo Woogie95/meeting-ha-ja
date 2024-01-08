@@ -6,6 +6,7 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,14 +30,14 @@ public class Member {
 
     private String password;
 
-    private int age;
+    private LocalDate birthDate;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
     private String phoneNumber;
 
-    private String profileImagePath; // 프로필이미지 S3 STORAGE??? 적용
+    private String profileImagePath;
 
     private String introduction;
 
@@ -47,5 +48,21 @@ public class Member {
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private Set<Meeting> meetings = new HashSet<>();
+
+    public void updatePassword(String password) {
+        this.password = password;
+    }
+
+    public void updateMemberInfo(String nickname, String phoneNumber, String introduction) {
+        if (nickname != null) {
+            this.nickname = nickname;
+        }
+        if (phoneNumber != null) {
+            this.phoneNumber = phoneNumber;
+        }
+        if (introduction != null) {
+            this.introduction = introduction;
+        }
+    }
 
 }

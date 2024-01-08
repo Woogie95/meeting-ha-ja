@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FindByIdMemberResponse {
+public class UpdateMemberResponse {
 
     private Long id;
     private String nickname;
@@ -28,13 +28,14 @@ public class FindByIdMemberResponse {
     private LocalDateTime registered;
     private boolean deleted;
 
-    public static FindByIdMemberResponse from(Member member) {
-        return FindByIdMemberResponse.builder()
+    public static UpdateMemberResponse from(Member member) {
+        return UpdateMemberResponse.builder()
                 .id(member.getId())
                 .nickname(member.getNickname())
                 .email(member.getEmail())
                 .password(member.getPassword())
                 .birthDate(member.getBirthDate())
+                .gender(member.getGender())
                 .phoneNumber(member.getPhoneNumber())
                 .profileImagePath(member.getProfileImagePath())
                 .introduction(member.getIntroduction())

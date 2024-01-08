@@ -2,7 +2,6 @@ package com.example.gatheringhaja.dto.request;
 
 import com.example.gatheringhaja.entity.Meeting;
 import com.example.gatheringhaja.entity.enumerations.MeetingType;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,7 +30,7 @@ public class CreateMeetingRequest {
     @FutureOrPresent(message = "모집 날짜는 현재 or 미래의 날짜여야 합니다.")
     private LocalDate meetingStartDate;
 
-    @Future(message = "마갑 날짜는 미래 날짜여야 합니다.")
+    @Future(message = "마감 날짜는 미래 날짜여야 합니다.")
     private LocalDate meetingEndDate;
 
     public Meeting toEntity() {
