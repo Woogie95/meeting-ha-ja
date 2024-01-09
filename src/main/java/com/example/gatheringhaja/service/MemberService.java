@@ -1,8 +1,8 @@
 package com.example.gatheringhaja.service;
 
+import com.example.gatheringhaja.dto.MemberPayload;
 import com.example.gatheringhaja.dto.request.UpdateMemberRequest;
 import com.example.gatheringhaja.dto.response.FindAllMemberResponse;
-import com.example.gatheringhaja.dto.response.FindByIdMemberResponse;
 import com.example.gatheringhaja.dto.response.UpdateMemberResponse;
 import com.example.gatheringhaja.entity.Member;
 import com.example.gatheringhaja.exception.ErrorCode;
@@ -24,10 +24,10 @@ public class MemberService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
-    public FindByIdMemberResponse findById(Long memberId) {
+    public MemberPayload findById(Long memberId) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new MemberExceptionHandler(ErrorCode.NOT_FOUND_MEMBER));
-        return FindByIdMemberResponse.from(member);
+        return MemberPayload.from(member);
     }
 
     @Transactional(readOnly = true)
