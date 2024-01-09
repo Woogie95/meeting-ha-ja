@@ -6,7 +6,7 @@ import com.example.gatheringhaja.dto.response.FindByIdMemberResponse;
 import com.example.gatheringhaja.dto.response.UpdateMemberResponse;
 import com.example.gatheringhaja.entity.Member;
 import com.example.gatheringhaja.exception.ErrorCode;
-import com.example.gatheringhaja.exception.MeetingHaJaException;
+import com.example.gatheringhaja.exception.member.MemberExceptionHandler;
 import com.example.gatheringhaja.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,7 +26,7 @@ public class MemberService {
     @Transactional(readOnly = true)
     public FindByIdMemberResponse findById(Long memberId) {
         Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new MeetingHaJaException(ErrorCode.NOT_FOUND_MEMBER));
+                .orElseThrow(() -> new MemberExceptionHandler(ErrorCode.NOT_FOUND_MEMBER));
         return FindByIdMemberResponse.from(member);
     }
 
@@ -41,7 +41,7 @@ public class MemberService {
     @Transactional
     public UpdateMemberResponse update(Long memberId, UpdateMemberRequest updateMemberRequest) {
         Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new MeetingHaJaException(ErrorCode.NOT_FOUND_MEMBER));
+                .orElseThrow(() -> new MemberExceptionHandler(ErrorCode.NOT_FOUND_MEMBER));
         if (updateMemberRequest.getPassword() != null) {
             String currentPassword = passwordEncoder.encode(updateMemberRequest.getPassword());
             member.updatePassword(currentPassword);
@@ -51,8 +51,14 @@ public class MemberService {
         return UpdateMemberResponse.from(memberRepository.save(member));
     }
 
-    /**
-     * 회원 탈퇴
-     */
+    @Transactional
+    public void delete(Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new MemberExceptionHandler(ErrorCode.NOT_FOUND_MEMBER));
+        if (member.isDeleted()) {
+            throw new MemberExceptionHandler(ErrorCode.ALREADY_DELETED_MEMBER);
+        }
+        member.deleteMember();
+    }
 
 }
