@@ -65,4 +65,8 @@ public class Member {
         }
     }
 
+    public void deleteMember() {
+        this.deleted = true;
+    }
+
 }
