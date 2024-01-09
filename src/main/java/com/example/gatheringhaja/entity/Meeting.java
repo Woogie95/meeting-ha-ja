@@ -45,10 +45,8 @@ public class Meeting {
     @CreatedDate
     private LocalDateTime updated;
 
-    @CreatedDate
     private LocalDate meetingStartDate;
 
-    @CreatedDate
     private LocalDate meetingEndDate;
 
     @OneToMany(mappedBy = "meeting", fetch = FetchType.LAZY)

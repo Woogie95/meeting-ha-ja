@@ -14,6 +14,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class CreateMeetingRequest {
 
+    private static final long DEFAULT_LIKES_VALUE = 0L;
+    private static final long DEFAULT_VIEWS_VALUE = 0L;
+
     @NotBlank(message = "모임에 대한 제목을 입력해주세요.")
     private String title;
 
@@ -33,14 +36,17 @@ public class CreateMeetingRequest {
     @Future(message = "마감 날짜는 미래 날짜여야 합니다.")
     private LocalDate meetingEndDate;
 
+    @NotNull(message = "사용자 ID 를 입력해주세요.")
+    private Long memberId;
+
     public Meeting toEntity() {
         return Meeting.builder()
                 .title(this.title)
                 .content(this.content)
                 .place(this.place)
                 .meetingType(this.meetingType)
-                .likes(0)
-                .views(0)
+                .likes(DEFAULT_LIKES_VALUE)
+                .views(DEFAULT_VIEWS_VALUE)
                 .meetingStartDate(this.meetingStartDate)
                 .meetingEndDate(this.meetingEndDate)
                 .build();
