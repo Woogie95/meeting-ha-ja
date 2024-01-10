@@ -2,12 +2,15 @@ package com.example.gatheringhaja.controller;
 
 import com.example.gatheringhaja.dto.request.CreateMeetingRequest;
 import com.example.gatheringhaja.dto.response.CreateMeetingResponse;
+import com.example.gatheringhaja.dto.response.FindAllMeetingResponse;
 import com.example.gatheringhaja.dto.response.FindByIdMeetingResponse;
 import com.example.gatheringhaja.service.MeetingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,6 +27,11 @@ public class MeetingController {
     @GetMapping("/{meetingId}")
     public ResponseEntity<FindByIdMeetingResponse> findById(@PathVariable("meetingId") Long meetingId) {
         return ResponseEntity.ok(meetingService.findById(meetingId));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<FindAllMeetingResponse>> findAll() {
+        return ResponseEntity.ok(meetingService.findAll());
     }
 
 }

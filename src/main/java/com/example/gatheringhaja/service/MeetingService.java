@@ -3,6 +3,7 @@ package com.example.gatheringhaja.service;
 import com.example.gatheringhaja.dto.MemberPayload;
 import com.example.gatheringhaja.dto.request.CreateMeetingRequest;
 import com.example.gatheringhaja.dto.response.CreateMeetingResponse;
+import com.example.gatheringhaja.dto.response.FindAllMeetingResponse;
 import com.example.gatheringhaja.dto.response.FindByIdMeetingResponse;
 import com.example.gatheringhaja.entity.Meeting;
 import com.example.gatheringhaja.exception.ErrorCode;
@@ -11,6 +12,9 @@ import com.example.gatheringhaja.repository.MeetingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +36,13 @@ public class MeetingService {
         Meeting meeting = meetingRepository.findById(meetingId)
                 .orElseThrow(() -> new MeetingExceptionHandler(ErrorCode.NOT_FOUND_MEETING));
         return FindByIdMeetingResponse.from(meeting);
+    }
+
+    @Transactional(readOnly = true)
+    public List<FindAllMeetingResponse> findAll() {
+        return meetingRepository.findAll().stream()
+                .map(FindAllMeetingResponse::from)
+                .collect(Collectors.toList());
     }
 
 }
