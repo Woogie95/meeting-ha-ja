@@ -7,7 +7,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -40,10 +39,10 @@ public class Meeting {
     private long views;
 
     @CreatedDate
-    private LocalDateTime created;
+    private LocalDate created;
 
     @CreatedDate
-    private LocalDateTime updated;
+    private LocalDate updated;
 
     private LocalDate meetingStartDate;
 
