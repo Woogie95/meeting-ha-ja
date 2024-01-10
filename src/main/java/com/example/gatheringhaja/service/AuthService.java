@@ -6,6 +6,7 @@ import com.example.gatheringhaja.dto.response.SignupMemberResponse;
 import com.example.gatheringhaja.entity.Member;
 import com.example.gatheringhaja.exception.MeetingHaJaException;
 import com.example.gatheringhaja.exception.ErrorCode;
+import com.example.gatheringhaja.exception.member.MemberExceptionHandler;
 import com.example.gatheringhaja.repository.MemberRepository;
 import com.example.gatheringhaja.util.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class AuthService {
     public SignupMemberResponse signup(SignupMemberRequest signupMemberRequest) {
         memberRepository.findByEmail(signupMemberRequest.getEmail())
                 .ifPresent(email -> {
-                    throw new MeetingHaJaException(ErrorCode.DUPLICATE_EMAIL);
+                    throw new MemberExceptionHandler(ErrorCode.DUPLICATE_EMAIL);
                 });
         Member member = signupMemberRequest.toEntity();
         member.setPassword(passwordEncoder.encode(signupMemberRequest.getPassword()));
@@ -40,7 +41,7 @@ public class AuthService {
 
     public String signIn(SignInMemberRequest signInMemberRequest) {
         Member member = memberRepository.findByEmail(signInMemberRequest.getEmail())
-                .orElseThrow(() -> new MeetingHaJaException(ErrorCode.NOT_FOUND_EMAIL));
+                .orElseThrow(() -> new MemberExceptionHandler(ErrorCode.NOT_FOUND_EMAIL));
         if (!passwordEncoder.matches(signInMemberRequest.getPassword(), member.getPassword())) {
             throw new MeetingHaJaException(ErrorCode.INVALID_PASSWORD);
         }
