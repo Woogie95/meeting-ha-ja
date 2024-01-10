@@ -8,8 +8,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -47,7 +47,7 @@ public class Member {
     private boolean deleted;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-    private Set<Meeting> meetings = new HashSet<>();
+    private List<Meeting> meetings = new ArrayList<>();
 
     public void updatePassword(String password) {
         this.password = password;

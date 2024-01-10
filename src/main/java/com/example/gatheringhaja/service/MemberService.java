@@ -2,6 +2,7 @@ package com.example.gatheringhaja.service;
 
 import com.example.gatheringhaja.dto.MemberPayload;
 import com.example.gatheringhaja.dto.request.UpdateMemberRequest;
+import com.example.gatheringhaja.dto.response.FindAllMeetingResponse;
 import com.example.gatheringhaja.dto.response.FindAllMemberResponse;
 import com.example.gatheringhaja.dto.response.UpdateMemberResponse;
 import com.example.gatheringhaja.entity.Member;
@@ -35,6 +36,15 @@ public class MemberService {
         return memberRepository.findAll()
                 .stream()
                 .map(FindAllMemberResponse::from)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<FindAllMeetingResponse> findAllMeetingsByMember(Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new MemberExceptionHandler(ErrorCode.NOT_FOUND_MEMBER));
+        return member.getMeetings().stream()
+                .map(FindAllMeetingResponse::from)
                 .collect(Collectors.toList());
     }
 

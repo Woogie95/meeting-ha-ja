@@ -1,6 +1,5 @@
-package com.example.gatheringhaja.dto.response;
+package com.example.gatheringhaja.dto;
 
-import com.example.gatheringhaja.entity.Comment;
 import com.example.gatheringhaja.entity.Meeting;
 import com.example.gatheringhaja.entity.enumerations.MeetingType;
 import lombok.AllArgsConstructor;
@@ -9,13 +8,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FindAllMeetingResponse {
+public class MeetingPayload {
 
     private Long id;
     private String title;
@@ -28,10 +26,25 @@ public class FindAllMeetingResponse {
     private LocalDate updated;
     private LocalDate meetingStartDate;
     private LocalDate meetingEndDate;
-    private List<Comment> comments;
 
-    public static FindAllMeetingResponse from(Meeting meeting) {
-        return FindAllMeetingResponse.builder()
+    public Meeting toEntity() {
+        return Meeting.builder()
+                .id(this.id)
+                .title(this.title)
+                .content(this.content)
+                .place(this.place)
+                .meetingType(this.meetingType)
+                .likes(this.likes)
+                .views(this.views)
+                .created(this.created)
+                .updated(this.updated)
+                .meetingStartDate(this.meetingStartDate)
+                .meetingEndDate(this.meetingEndDate)
+                .build();
+    }
+
+    public static MeetingPayload from(Meeting meeting) {
+        return MeetingPayload.builder()
                 .id(meeting.getId())
                 .title(meeting.getTitle())
                 .content(meeting.getContent())
@@ -43,7 +56,6 @@ public class FindAllMeetingResponse {
                 .updated(meeting.getUpdated())
                 .meetingStartDate(meeting.getMeetingStartDate())
                 .meetingEndDate(meeting.getMeetingEndDate())
-                .comments(meeting.getComments())
                 .build();
     }
 
