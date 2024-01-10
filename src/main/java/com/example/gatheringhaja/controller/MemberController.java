@@ -1,6 +1,7 @@
 package com.example.gatheringhaja.controller;
 
 import com.example.gatheringhaja.dto.request.UpdateMemberRequest;
+import com.example.gatheringhaja.dto.response.FindAllMeetingResponse;
 import com.example.gatheringhaja.dto.response.FindAllMemberResponse;
 import com.example.gatheringhaja.dto.response.FindByIdMemberResponse;
 import com.example.gatheringhaja.dto.response.UpdateMemberResponse;
@@ -30,6 +31,12 @@ public class MemberController {
     public ResponseEntity<List<FindAllMemberResponse>> findAll() {
         return ResponseEntity.ok(memberService.findAll());
     }
+
+    @GetMapping("/{memberId}/meetings")
+    public ResponseEntity<List<FindAllMeetingResponse>> findAllMeetingsByMember(@PathVariable("memberId") Long memberId) {
+        return ResponseEntity.ok(memberService.findAllMeetingsByMember(memberId));
+    }
+
 
     @PutMapping("/{memberId}")
     public ResponseEntity<UpdateMemberResponse> update(@PathVariable("memberId") Long memberId,
