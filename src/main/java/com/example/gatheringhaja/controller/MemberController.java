@@ -37,7 +37,6 @@ public class MemberController {
         return ResponseEntity.ok(memberService.findAllMeetingsByMember(memberId));
     }
 
-
     @PutMapping("/{memberId}")
     public ResponseEntity<UpdateMemberResponse> update(@PathVariable("memberId") Long memberId,
                                                        @RequestBody @Valid UpdateMemberRequest updateMemberRequest) {
