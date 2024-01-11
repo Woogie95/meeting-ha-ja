@@ -30,11 +30,12 @@ public class MeetingService {
         return CreateMeetingResponse.from(meetingRepository.save(meeting));
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public FindByIdMeetingResponse findById(Long meetingId) {
         Meeting meeting = meetingRepository.findById(meetingId)
                 .orElseThrow(() -> new MeetingExceptionHandler(ErrorCode.NOT_FOUND_MEETING));
-        return FindByIdMeetingResponse.from(meeting);
+        meeting.increaseViewCount();
+        return FindByIdMeetingResponse.from(meetingRepository.save(meeting));
     }
 
     @Transactional(readOnly = true)
