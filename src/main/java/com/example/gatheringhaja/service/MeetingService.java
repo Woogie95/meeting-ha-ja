@@ -55,4 +55,14 @@ public class MeetingService {
         return UpdateMeetingResponse.from(meetingRepository.save(meeting));
     }
 
+    @Transactional
+    public void delete(Long meetingId) {
+        Meeting meeting = meetingRepository.findById(meetingId)
+                .orElseThrow(() -> new MeetingExceptionHandler(ErrorCode.NOT_FOUND_MEETING));
+        if (!meeting.getMember().getId().equals(meetingId)) {
+            throw new MeetingExceptionHandler(ErrorCode.NO_AUTHORITY);
+        }
+        meetingRepository.delete(meeting);
+    }
+
 }
