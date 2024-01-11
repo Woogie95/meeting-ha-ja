@@ -23,6 +23,8 @@ import java.util.Set;
 @EntityListeners(AuditingEntityListener.class)
 public class Meeting {
 
+    private static final int INCREMENT_VIEW_COUNT = 1;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -79,6 +81,10 @@ public class Meeting {
         if (updateMeetingRequest.getMeetingEndDate() != null) {
             this.meetingEndDate = updateMeetingRequest.getMeetingEndDate();
         }
+    }
+
+    public void increaseViewCount() {
+        this.views += INCREMENT_VIEW_COUNT;
     }
 
 }
