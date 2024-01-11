@@ -1,5 +1,6 @@
 package com.example.gatheringhaja.controller;
 
+import com.example.gatheringhaja.dto.MessageResponse;
 import com.example.gatheringhaja.dto.request.CreateMeetingRequest;
 import com.example.gatheringhaja.dto.request.UpdateMeetingRequest;
 import com.example.gatheringhaja.dto.response.CreateMeetingResponse;
@@ -9,6 +10,7 @@ import com.example.gatheringhaja.dto.response.UpdateMeetingResponse;
 import com.example.gatheringhaja.service.MeetingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +42,12 @@ public class MeetingController {
     public ResponseEntity<UpdateMeetingResponse> update(@PathVariable("meetingId") Long meetingId,
                                                         @RequestBody @Valid UpdateMeetingRequest updateMeetingRequest) {
         return ResponseEntity.ok(meetingService.update(meetingId, updateMeetingRequest));
+    }
+
+    @DeleteMapping("/{meetingId}")
+    public ResponseEntity<MessageResponse> delete(@PathVariable("meetingId") Long meetingId) {
+        meetingService.delete(meetingId);
+        return new ResponseEntity<>(MessageResponse.from(MessageResponse.MEETING_DELETED), HttpStatus.OK);
     }
 
 }

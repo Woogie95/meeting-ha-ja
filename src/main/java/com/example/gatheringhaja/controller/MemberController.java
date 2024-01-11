@@ -1,12 +1,12 @@
 package com.example.gatheringhaja.controller;
 
+import com.example.gatheringhaja.dto.MessageResponse;
 import com.example.gatheringhaja.dto.request.UpdateMemberRequest;
 import com.example.gatheringhaja.dto.response.FindAllMeetingResponse;
 import com.example.gatheringhaja.dto.response.FindAllMemberResponse;
 import com.example.gatheringhaja.dto.response.FindByIdMemberResponse;
 import com.example.gatheringhaja.dto.response.UpdateMemberResponse;
 import com.example.gatheringhaja.service.MemberService;
-import com.example.gatheringhaja.util.MessageConstants;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -45,9 +45,9 @@ public class MemberController {
     }
 
     @DeleteMapping("/{memberId}")
-    public ResponseEntity<String> delete(@PathVariable("memberId") Long memberId) {
+    public ResponseEntity<MessageResponse> delete(@PathVariable("memberId") Long memberId) {
         memberService.delete(memberId);
-        return new ResponseEntity<>(MessageConstants.MEMBER_DELETED, HttpStatus.OK);
+        return new ResponseEntity<>(MessageResponse.from(MessageResponse.MEMBER_DELETED), HttpStatus.OK);
     }
 
 }
