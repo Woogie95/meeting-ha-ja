@@ -1,9 +1,11 @@
 package com.example.gatheringhaja.entity;
 
+import com.example.gatheringhaja.dto.request.UpdateMeetingRequest;
 import com.example.gatheringhaja.entity.enumerations.MeetingType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
@@ -41,7 +43,7 @@ public class Meeting {
     @CreatedDate
     private LocalDate created;
 
-    @CreatedDate
+    @LastModifiedDate
     private LocalDate updated;
 
     private LocalDate meetingStartDate;
@@ -57,5 +59,26 @@ public class Meeting {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberId")
     private Member member;
+
+    public void updateMeetingInfo(UpdateMeetingRequest updateMeetingRequest) {
+        if (updateMeetingRequest.getTitle() != null) {
+            this.title = updateMeetingRequest.getTitle();
+        }
+        if (updateMeetingRequest.getContent() != null) {
+            this.content = updateMeetingRequest.getContent();
+        }
+        if (updateMeetingRequest.getPlace() != null) {
+            this.place = updateMeetingRequest.getPlace();
+        }
+        if (updateMeetingRequest.getMeetingType() != null) {
+            this.meetingType = updateMeetingRequest.getMeetingType();
+        }
+        if (updateMeetingRequest.getMeetingStartDate() != null) {
+            this.meetingStartDate = updateMeetingRequest.getMeetingStartDate();
+        }
+        if (updateMeetingRequest.getMeetingEndDate() != null) {
+            this.meetingEndDate = updateMeetingRequest.getMeetingEndDate();
+        }
+    }
 
 }

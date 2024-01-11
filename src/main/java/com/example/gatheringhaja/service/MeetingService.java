@@ -2,9 +2,8 @@ package com.example.gatheringhaja.service;
 
 import com.example.gatheringhaja.dto.MemberPayload;
 import com.example.gatheringhaja.dto.request.CreateMeetingRequest;
-import com.example.gatheringhaja.dto.response.CreateMeetingResponse;
-import com.example.gatheringhaja.dto.response.FindAllMeetingResponse;
-import com.example.gatheringhaja.dto.response.FindByIdMeetingResponse;
+import com.example.gatheringhaja.dto.request.UpdateMeetingRequest;
+import com.example.gatheringhaja.dto.response.*;
 import com.example.gatheringhaja.entity.Meeting;
 import com.example.gatheringhaja.exception.ErrorCode;
 import com.example.gatheringhaja.exception.meeting.MeetingExceptionHandler;
@@ -43,6 +42,17 @@ public class MeetingService {
         return meetingRepository.findAll().stream()
                 .map(FindAllMeetingResponse::from)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public UpdateMeetingResponse update(Long meetingId, UpdateMeetingRequest updateMeetingRequest) {
+        Meeting meeting = meetingRepository.findById(meetingId)
+                .orElseThrow(() -> new MeetingExceptionHandler(ErrorCode.NOT_FOUND_MEETING));
+        if (!meeting.getMember().getId().equals(updateMeetingRequest.getMemberId())) {
+            throw new MeetingExceptionHandler(ErrorCode.NO_AUTHORITY);
+        }
+        meeting.updateMeetingInfo(updateMeetingRequest);
+        return UpdateMeetingResponse.from(meetingRepository.save(meeting));
     }
 
 }
