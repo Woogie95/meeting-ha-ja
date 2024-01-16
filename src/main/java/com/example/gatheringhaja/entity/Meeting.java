@@ -4,9 +4,6 @@ import com.example.gatheringhaja.dto.request.UpdateMeetingRequest;
 import com.example.gatheringhaja.entity.enumerations.MeetingType;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,9 +17,9 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
-public class Meeting {
+public class Meeting extends BaseTimeEntity {
 
+    private static final int LATEST_INDEX_VALUE = 1;
     private static final int INCREMENT_VIEW_COUNT = 1;
 
     @Id
@@ -42,17 +39,12 @@ public class Meeting {
 
     private long views;
 
-    @CreatedDate
-    private LocalDate created;
-
-    @LastModifiedDate
-    private LocalDate updated;
-
     private LocalDate meetingStartDate;
 
     private LocalDate meetingEndDate;
 
-    @OneToMany(mappedBy = "meeting", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "meeting", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "meeting", fetch = FetchType.LAZY)
@@ -85,6 +77,11 @@ public class Meeting {
 
     public void increaseViewCount() {
         this.views += INCREMENT_VIEW_COUNT;
+    }
+
+    public void addComments(Comment comment) {
+        comment.setMeeting(this);
+        this.comments.add(comment);
     }
 
 }

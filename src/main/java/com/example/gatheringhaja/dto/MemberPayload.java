@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -23,8 +22,8 @@ public class MemberPayload {
     private Gender gender;
     private String phoneNumber;
     private String introduction;
-    private LocalDateTime registered;
     private boolean deleted;
+    private LocalDate created;
 
     public Member toEntity() {
         return Member.builder()
@@ -35,7 +34,6 @@ public class MemberPayload {
                 .gender(this.gender)
                 .phoneNumber(this.phoneNumber)
                 .introduction(this.introduction)
-                .registered(this.registered)
                 .deleted(this.deleted)
                 .build();
     }
@@ -49,8 +47,8 @@ public class MemberPayload {
                 .gender(member.getGender())
                 .phoneNumber(member.getPhoneNumber())
                 .introduction(member.getIntroduction())
-                .registered(member.getRegistered())
                 .deleted(member.isDeleted())
+                .created(member.getCreated())
                 .build();
     }
 

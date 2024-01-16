@@ -40,8 +40,8 @@ public class CreateMeetingResponse {
                 .views(meeting.getViews())
                 .meetingStartDate(meeting.getMeetingStartDate())
                 .meetingEndDate(meeting.getMeetingEndDate())
-                .created(LocalDate.now())
-                .updated(LocalDate.now())
+                .created(meeting.getCreated())
+                .updated(meeting.getUpdated())
                 .nickname(meeting.getMember().getNickname())
                 .memberId(meeting.getMember().getId())
                 .build();

@@ -8,13 +8,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class FindAllMemberResponse {
+
+    private static final boolean DEFAULT_IS_DELETED = false;
 
     private Long id;
     private String nickname;
@@ -25,8 +26,8 @@ public class FindAllMemberResponse {
     private String phoneNumber;
     private String profileImagePath;
     private String introduction;
-    private LocalDateTime registered;
-    private boolean deleted;
+    private LocalDate created;
+    private boolean isDeleted;
 
     public static FindAllMemberResponse from(Member member) {
         return FindAllMemberResponse.builder()
@@ -35,11 +36,12 @@ public class FindAllMemberResponse {
                 .email(member.getEmail())
                 .password(member.getPassword())
                 .birthDate(member.getBirthDate())
+                .gender(member.getGender())
                 .phoneNumber(member.getPhoneNumber())
                 .profileImagePath(member.getProfileImagePath())
                 .introduction(member.getIntroduction())
-                .registered(member.getRegistered())
-                .deleted(false)
+                .created(member.getCreated())
+                .isDeleted(DEFAULT_IS_DELETED)
                 .build();
     }
 
