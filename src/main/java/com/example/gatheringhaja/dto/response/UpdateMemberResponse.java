@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -25,7 +24,8 @@ public class UpdateMemberResponse {
     private String phoneNumber;
     private String profileImagePath;
     private String introduction;
-    private LocalDateTime registered;
+    private LocalDate created;
+    private LocalDate updated;
     private boolean deleted;
 
     public static UpdateMemberResponse from(Member member) {
@@ -39,7 +39,8 @@ public class UpdateMemberResponse {
                 .phoneNumber(member.getPhoneNumber())
                 .profileImagePath(member.getProfileImagePath())
                 .introduction(member.getIntroduction())
-                .registered(member.getRegistered())
+                .created(member.getCreated())
+                .updated(member.getUpdated())
                 .deleted(false)
                 .build();
     }

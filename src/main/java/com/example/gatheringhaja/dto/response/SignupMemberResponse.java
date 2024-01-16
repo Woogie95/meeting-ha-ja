@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -25,7 +24,7 @@ public class SignupMemberResponse {
     private String phoneNumber;
     private String profileImagePath;
     private String introduction;
-    private LocalDateTime registered;
+    private LocalDate created;
     private boolean deleted;
 
     public static SignupMemberResponse from(Member member) {
@@ -39,7 +38,7 @@ public class SignupMemberResponse {
                 .phoneNumber(member.getPhoneNumber())
                 .profileImagePath(member.getProfileImagePath())
                 .introduction(member.getIntroduction())
-                .registered(member.getRegistered())
+                .created(member.getCreated())
                 .deleted(false)
                 .build();
     }
