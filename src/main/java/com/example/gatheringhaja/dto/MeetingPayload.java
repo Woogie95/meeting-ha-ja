@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Builder
@@ -22,10 +24,9 @@ public class MeetingPayload {
     private MeetingType meetingType;
     private long likes;
     private long views;
-    private LocalDate created;
-    private LocalDate updated;
     private LocalDate meetingStartDate;
     private LocalDate meetingEndDate;
+    private List<CommentPayload> commentPayloads;
 
     public Meeting toEntity() {
         return Meeting.builder()
@@ -36,8 +37,6 @@ public class MeetingPayload {
                 .meetingType(this.meetingType)
                 .likes(this.likes)
                 .views(this.views)
-                .created(this.created)
-                .updated(this.updated)
                 .meetingStartDate(this.meetingStartDate)
                 .meetingEndDate(this.meetingEndDate)
                 .build();
@@ -52,10 +51,11 @@ public class MeetingPayload {
                 .meetingType(meeting.getMeetingType())
                 .likes(meeting.getLikes())
                 .views(meeting.getViews())
-                .created(meeting.getCreated())
-                .updated(meeting.getUpdated())
                 .meetingStartDate(meeting.getMeetingStartDate())
                 .meetingEndDate(meeting.getMeetingEndDate())
+                .commentPayloads(meeting.getComments().stream()
+                        .map(CommentPayload::from)
+                        .collect(Collectors.toList()))
                 .build();
     }
 

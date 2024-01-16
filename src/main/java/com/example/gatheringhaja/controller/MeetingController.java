@@ -1,12 +1,10 @@
 package com.example.gatheringhaja.controller;
 
 import com.example.gatheringhaja.dto.MessageResponse;
+import com.example.gatheringhaja.dto.request.CreateCommentRequest;
 import com.example.gatheringhaja.dto.request.CreateMeetingRequest;
 import com.example.gatheringhaja.dto.request.UpdateMeetingRequest;
-import com.example.gatheringhaja.dto.response.CreateMeetingResponse;
-import com.example.gatheringhaja.dto.response.FindAllMeetingResponse;
-import com.example.gatheringhaja.dto.response.FindByIdMeetingResponse;
-import com.example.gatheringhaja.dto.response.UpdateMeetingResponse;
+import com.example.gatheringhaja.dto.response.*;
 import com.example.gatheringhaja.service.MeetingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -48,6 +46,12 @@ public class MeetingController {
     public ResponseEntity<MessageResponse> delete(@PathVariable("meetingId") Long meetingId) {
         meetingService.delete(meetingId);
         return new ResponseEntity<>(MessageResponse.from(MessageResponse.MEETING_DELETED), HttpStatus.OK);
+    }
+
+    @PostMapping("/{meetingId}/comments")
+    public ResponseEntity<CreateCommentResponse> createComment(@PathVariable("meetingId") Long meetingId,
+                                                               @RequestBody @Valid CreateCommentRequest createCommentRequest) {
+        return ResponseEntity.ok(meetingService.createComment(meetingId, createCommentRequest));
     }
 
 }
