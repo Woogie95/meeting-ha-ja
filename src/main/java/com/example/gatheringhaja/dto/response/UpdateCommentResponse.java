@@ -1,4 +1,4 @@
-package com.example.gatheringhaja.dto;
+package com.example.gatheringhaja.dto.response;
 
 import com.example.gatheringhaja.entity.Comment;
 import lombok.AllArgsConstructor;
@@ -12,24 +12,20 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentPayload {
-
-    public static final boolean DEFAULT_IS_UPDATED = false;
+public class UpdateCommentResponse {
 
     private Long id;
     private String content;
     private boolean isUpdated;
-    private Long meetingId;
     private Long memberId;
     private LocalDate created;
     private LocalDate updated;
 
-    public static CommentPayload from(Comment comment) {
-        return CommentPayload.builder()
+    public static UpdateCommentResponse from(Comment comment) {
+        return UpdateCommentResponse.builder()
                 .id(comment.getId())
                 .content(comment.getContent())
-                .isUpdated(DEFAULT_IS_UPDATED)
-                .meetingId(comment.getMeeting().getId())
+                .isUpdated(comment.isUpdated())
                 .memberId(comment.getMemberId())
                 .created(comment.getCreated())
                 .updated(comment.getUpdated())

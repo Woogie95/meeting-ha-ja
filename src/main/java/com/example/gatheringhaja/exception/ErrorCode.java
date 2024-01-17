@@ -8,8 +8,8 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public enum ErrorCode {
 
-    NO_LATEST_COMMENT(HttpStatus.NOT_FOUND, "최신 댓글이 없습니다."),
     NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, "존재하는 회원이 없습니다."),
+    NOT_FOUND_COMMENT(HttpStatus.NOT_FOUND, "존재하는 댓글이 없습니다."),
     DUPLICATE_EMAIL(HttpStatus.BAD_REQUEST, "이미 존재하는 이메일입니다."),
     NOT_FOUND_LOAD_FILE(HttpStatus.NOT_FOUND, "파일을 찾을 수 없습니다."),
     NOT_FOUND_MEETING(HttpStatus.NOT_FOUND, "요청하신 모임 정보가 없습니다."),

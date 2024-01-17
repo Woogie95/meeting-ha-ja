@@ -3,6 +3,7 @@ package com.example.gatheringhaja.controller;
 import com.example.gatheringhaja.dto.MessageResponse;
 import com.example.gatheringhaja.dto.request.CreateCommentRequest;
 import com.example.gatheringhaja.dto.request.CreateMeetingRequest;
+import com.example.gatheringhaja.dto.request.UpdateCommentRequest;
 import com.example.gatheringhaja.dto.request.UpdateMeetingRequest;
 import com.example.gatheringhaja.dto.response.*;
 import com.example.gatheringhaja.service.MeetingService;
@@ -52,6 +53,13 @@ public class MeetingController {
     public ResponseEntity<CreateCommentResponse> createComment(@PathVariable("meetingId") Long meetingId,
                                                                @RequestBody @Valid CreateCommentRequest createCommentRequest) {
         return ResponseEntity.ok(meetingService.createComment(meetingId, createCommentRequest));
+    }
+
+    @PutMapping("/{meetingId}/{commentId}")
+    public ResponseEntity<UpdateCommentResponse> updateComment(@PathVariable("meetingId") Long meetingId,
+                                                               @PathVariable("commentId") Long commentId,
+                                                               @RequestBody @Valid UpdateCommentRequest updateCommentRequest) {
+        return ResponseEntity.ok(meetingService.updateComment(meetingId, commentId, updateCommentRequest));
     }
 
 }
