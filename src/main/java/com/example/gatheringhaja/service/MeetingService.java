@@ -4,6 +4,7 @@ import com.example.gatheringhaja.dto.CommentPayload;
 import com.example.gatheringhaja.dto.MemberPayload;
 import com.example.gatheringhaja.dto.request.CreateCommentRequest;
 import com.example.gatheringhaja.dto.request.CreateMeetingRequest;
+import com.example.gatheringhaja.dto.request.UpdateCommentRequest;
 import com.example.gatheringhaja.dto.request.UpdateMeetingRequest;
 import com.example.gatheringhaja.dto.response.*;
 import com.example.gatheringhaja.entity.Comment;
@@ -77,10 +78,18 @@ public class MeetingService {
         Comment comment = createCommentRequest.toEntity();
         meeting.addComments(comment);
         meetingRepository.save(meeting);
-        Comment latestComment = meeting.getComments().stream()
-                .reduce((first, second) -> second)
-                .orElseThrow(() -> new MeetingExceptionHandler(ErrorCode.NO_LATEST_COMMENT));
-        return CreateCommentResponse.from(CommentPayload.from(latestComment));
+        return CreateCommentResponse.from(CommentPayload.from(meeting.getLatestComment()));
+    }
+
+    @Transactional
+    public UpdateCommentResponse updateComment(Long meetingId, Long commentId, UpdateCommentRequest updateCommentRequest) {
+        Meeting meeting = meetingRepository.findById(meetingId)
+                .orElseThrow(() -> new MeetingExceptionHandler(ErrorCode.NOT_FOUND_MEETING));
+        memberService.findById(updateCommentRequest.getMemberId());
+        Comment comment = meeting.getCommentById(commentId);
+        meeting.updateComment(commentId, updateCommentRequest);
+        meetingRepository.save(meeting);
+        return UpdateCommentResponse.from(comment);
     }
 
 }

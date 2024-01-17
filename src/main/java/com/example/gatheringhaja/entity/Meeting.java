@@ -1,7 +1,10 @@
 package com.example.gatheringhaja.entity;
 
+import com.example.gatheringhaja.dto.request.UpdateCommentRequest;
 import com.example.gatheringhaja.dto.request.UpdateMeetingRequest;
 import com.example.gatheringhaja.entity.enumerations.MeetingType;
+import com.example.gatheringhaja.exception.ErrorCode;
+import com.example.gatheringhaja.exception.meeting.MeetingExceptionHandler;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -82,6 +85,32 @@ public class Meeting extends BaseTimeEntity {
     public void addComments(Comment comment) {
         comment.setMeeting(this);
         this.comments.add(comment);
+    }
+
+    public Comment getLatestComment() {
+        return comments.stream()
+                .reduce((first, second) -> second)
+                .orElseThrow(() -> new MeetingExceptionHandler(ErrorCode.NOT_FOUND_COMMENT));
+
+    }
+
+    public Comment getCommentById(Long commentId) {
+        return comments.stream()
+                .filter(comment -> comment.getId().equals(commentId))
+                .findFirst()
+                .orElseThrow(() -> new MeetingExceptionHandler(ErrorCode.NOT_FOUND_COMMENT));
+    }
+
+    public void updateComment(Long commentId, UpdateCommentRequest updateCommentRequest) {
+        comments.stream()
+                .filter(comment -> comment.getId().equals(commentId))
+                .findFirst()
+                .ifPresent(comment -> {
+                    if (updateCommentRequest.getContent() != null && !updateCommentRequest.getContent().isEmpty()) {
+                        comment.setContent(updateCommentRequest.getContent());
+                        comment.setUpdated(true);
+                    }
+                });
     }
 
 }
